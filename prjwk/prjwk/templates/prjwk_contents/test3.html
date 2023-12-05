@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        table {
+            width: 80%; 
+            margin: 0 auto; 
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid #000;
+        }
+        th, td {
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background-color: #151651;
+        }
+        td {
+            background-color: #f7f7f7;
+        }
+
+        /* page style */
+        .page{
+            text-align: center;
+            width: 50%;
+        }
+        .pagination{
+            list-style: none;
+            display:inline-block;
+            padding: 0;
+            margin-top: 20px;
+        }
+        .pagination li{
+            display: inline;
+            text-align: center;
+        }
+
+        .pagination a{
+            float:left;
+            display: block;
+            font-size: 14px;
+            text-decoration: none;
+            padding: 5px 12px;
+            color: #151651;
+            line-height: 1.5;
+        }
+
+        .first{
+            margin-right: 15px;
+        }  
+
+        .last{
+            margin-left:15px;
+        }
+
+        .first:hover, .last:hover, .left:hover, .right:hover{
+            color: #2e9cdf;
+        }
+
+        .pagination a.active{
+            cursor:default;
+            color:#ffffff;
+        }
+
+        .pagination a:active{
+            outline:none;
+        }
+
+        .modal .num{
+            margin-left: 3px;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            line-height: 30px;
+            -mox-border-radius: 100%;
+            -wedkit-border-radius: 100%;
+            border-radius: 100%
+        }
+
+        .modal .num:hover{
+            background-color: #2e9cdf;
+            color: #ffffff;
+        }
+
+        .modal .num.active, .modal .num:active{
+            background-color: #2e0cdf;
+            cursor: pointer;
+        }
+
+        .arrow-left{
+            width: 0;
+            height: 0;
+            border-top: 10px solid transparent;
+            border-bottom: 10px solid transparent;
+            border-right: 10px solid blue;
+        }
+
+        .box{
+            width:20px;
+            height:100px;
+            background-color: #151651;
+            float: left;
+            margin-right: 10px;
+        }
+        .layout{
+            display:grid;
+            grid:
+                "header" 120px
+                "main" 800px
+        }
+        .header{
+            display: table;
+        }
+        .text1{
+            
+            float: left;
+            line-height: 60px;
+        }
+        .btn{
+            border-radius: 20px;
+            border: none;
+            outline: none;
+            font-size: 12px;
+            font-weight: bold;
+            padding: 15px 45px;
+            margin: 14px;
+            letter-spacing: 1px;
+            text-transform: 1px;
+            cursor: pointer;
+            margin-top: 40px;
+            float: right;
+            margin-right: 10px;
+            background-color: #151651;
+            color: #f7f7f7;
+
+        }
+        
+        .main{
+            margin-top: 10px;
+        }
+        .color{
+            color: #96a0ad;
+        }
+
+    </style>
+</head>
+<body>
+    <section class="layout">
+        <div class="header">
+            <div class="box"></div>
+            <div class="text1">
+                <h1>서울지역의 동영상 컨텐츠</h1>
+            </div>
+            <div>
+                <button class="btn" onclick="location.href='/prjwk_contents/'">메인 페이지로 이동</button>
+            </div>
+        </div>
+
+        <div class="main">
+            <table>
+                <thead>
+                    <tr>
+                        <th class="color">Number</th>
+                        <th class="color">Video Name</th>
+                        <th class="color">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for content in video_seoul %}
+                    <tr>
+                        <td>{{ forloop.counter0|add:video_seoul.start_index }}</td> <!-- 순번 표시 -->
+                        <td>{{ content.contents_name }}</td>
+                        <td><a href="{% url 'download_video' %}?videoName={{ content.contents_name }}"
+                                class="download-link">Download Video</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <div class="page">
+                <span class="pagination modal">
+                    {% if video_seoul.has_previous %}
+                    <a href="?page=1" class="first"> first</a>
+                    <a href="?page={{ video_seoul.previous_page_number }}" class="arrow left">
+                        <<< /a>
+                            {% endif %}
+
+                            {% for num in video_seoul.paginator.page_range %}
+                            <li><a href="?page={{ num }}"
+                                    class="num{% if num == video_seoul.number %} active{% endif %}">{{ num }}</a></li>
+                            {% endfor %}
+
+
+                            {% if video_seoul.has_next %}
+                            <a href="?page={{ video_seoul.next_page_number }}" class="arrow right">>></a>
+                            <a href="?page={{ video_seoul.paginator.num_pages }}" class="last">last &raquo;</a>
+                            {% endif %}
+                </span>
+            </div>
+        </div>
+    </section>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script>
+        function goToMainPage() {
+            var mainPageUrl = '/prjwk_contents/';
+            window.location.href = mainPageUrl;  // 페이지 이동
+        }
+
+        function downloadVideo(videoName) {
+            // 동영상 다운로드
+            window.location.href = `/prjwk_contents/download_video?videoName=${videoName}`;
+
+            // 다운로드 기록 업데이트
+            $.post('/prjwk_contents/update_download_status', { videoName: videoName }, function (data) {
+                console.log(data.status);
+            });
+        }
+    </script>
+</body>
+</html>

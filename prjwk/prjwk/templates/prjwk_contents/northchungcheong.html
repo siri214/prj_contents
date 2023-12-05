@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    .box{
+            width:20px;
+            height:100px;
+            background-color: #151651;
+            float: left;
+            margin-right: 10px;
+        }
+        .layout{
+            display:grid;
+            grid:
+                "header" 120px
+                "main" 800px
+        }
+        .header{
+            display: table;
+        }
+        .text1{
+            
+            float: left;
+            line-height: 60px;
+        }
+        .btn{
+            border-radius: 20px;
+            border: none;
+            outline: none;
+            font-size: 12px;
+            font-weight: bold;
+            padding: 15px 45px;
+            margin: 14px;
+            letter-spacing: 1px;
+            text-transform: 1px;
+            cursor: pointer;
+            margin-top: 40px;
+            float: right;
+            margin-right: 10px;
+            background-color: #151651;
+            color: #f7f7f7;
+
+        }
+</style>
+<body>
+    <section class="layout">
+        <div class="header">
+            <div class="box"></div>
+            <div class="text1">
+                <h1>충청북도지역의 동영상 컨텐츠</h1>
+            </div>
+            <div>
+                <button class="btn" onclick="location.href='/prjwk_contents/'">메인 페이지로 이동</button>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

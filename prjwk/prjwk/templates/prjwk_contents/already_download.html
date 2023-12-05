@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Already Downloaded</title>
+</head>
+<script>
+  function onConfirm() {
+    // window.location.reload(); 
+    window.location.href="/prjwk_contents/test3"
+  }
+</script>
+<body>
+    <script>
+        // 페이지가 로드될 때 실행되는 함수
+        document.addEventListener('DOMContentLoaded', function() {
+            // alert 함수를 사용하여 알림 창을 띄움
+            alert('이미 다운로드한 동영상입니다. 추가로 다운로드 하려면 결제하세요.');
+
+            // 확인 버튼을 눌렀을 때 onConfirm 함수를 호출하도록 설정
+            onConfirm();
+        });
+    </script>
+</body>
+</html>

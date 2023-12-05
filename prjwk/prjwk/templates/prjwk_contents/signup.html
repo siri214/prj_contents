@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mainpage</title>
+</head>
+<style>
+* {
+  box-sizing: border-box;
+}
+.wrapper{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #ebecf0;
+    overflow: hidden;
+}
+.container{
+  border-radius: 10px;
+  box-shadow: -5px -5px 10px #fff, 5px 5px 10px #babebc;
+  position: absolute;
+  width: 768px;
+  min-height: 520px;
+  overflow: hidden;
+}
+.sign-up{
+    position: absolute;
+    left: 0;
+    width: 50%;
+    height: 100%;
+
+    transition: all 0.5s;
+}
+form {
+  background: #ebecf0;
+  display: flex;
+  flex-direction: column;
+  padding: 0 50px;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+}
+form input {
+  background: #eee;
+  padding: 16px;
+  margin: 8px 0;
+  width: 85%;
+  border: 0;
+  outline: none;
+  border-radius: 20px;
+  box-shadow: inset 7px 2px 10px #babebc, inset -5px -5px 12px #fff;
+}
+button{
+  border-radius: 20px;
+  border: none;
+  outline: none;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 15px 45px;
+  margin: 14px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: transform 80ms ease-in;
+}
+.form_btn{
+    box-shadow: -5px -5px 10px #fff, 5px 5px 8px #babebc;
+}
+.form_btn:active{
+    box-shadow: inset 1px 1px 2px #babebc, inset -1px -1px 2px #fff;
+}
+.overlay-left {
+  display: flex;
+  flex-direction: column;
+  padding: 0 50px;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  right: 0;
+  width: 50%;
+  height: 100%;
+  background-color: #151651;
+  color: #fff;
+  transition: all 0.5s;
+}
+.container.right-panel-active .overlay-left {
+  transform: translateX(-100%);
+  opacity: 1;
+  z-index: 2;
+}
+.container.right-panel-active .sign-up{
+  transform: translateX(100%);
+  opacity: 1;
+  z-index: 2;
+}
+form h1 {
+  font-weight: bold;
+  margin: 0;
+  color: #000;
+}
+
+p {
+  font-size: 16px;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+  margin: 20px 0 30px;
+}
+span {
+  font-size: 12px;
+  color: #000;
+  letter-spacing: 0.5px;
+  margin-bottom: 10px;
+}
+.overlay_btn {
+  background-color: #151651;
+  color: #fff;
+  box-shadow:  5px 5px 8px #ebecf0;
+}
+</style>
+<body>
+    <div class="wrapper">
+        <div class="container">
+            <div class="sign-up">
+                <form method="post" action="/prjwk_contents/signup">
+                    <h1>Create Account</h1>
+                    {% csrf_token %}
+                    <input name="username" type="text" placeholder="ID">
+                    <input name="first_name" type="text" placeholder="FirstName">
+                    <input name="last_name" type="text" placeholder="LastName">
+                    <input name="password1" type="password" placeholder="PassWord">
+                    <input name="password2" type="password" placeholder="RePassWord">
+                    <input name="email" type="email" placeholder="Email">
+                    <input type="submit" class="form_btn" value="Sign Up">
+                </form>
+            </div>
+            <div class="overlay-container">
+                <div class="overlay-left">
+                    <h1>Welcome Back</h1>
+                    <p>로그인하시려면, SIGN IN 버튼을 눌러 로그인을 해주세요.</p>
+                    <button id="signin" class="overlay_btn"onclick="location.href='/prjwk_contents/login'">SIGN IN</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
